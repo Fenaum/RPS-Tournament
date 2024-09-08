@@ -10,6 +10,8 @@ const winningChoices: WinningChoices = {
   scissors: "paper",
 };
 
+let choices: PlayerChoice[] = ["rock", "paper", "scissors"];
+
 // Define the game state
 let gameState = {
   player1Score: 0,
@@ -18,11 +20,10 @@ let gameState = {
 };
 
 // Function to determine the round result
-const startRound = function (
-  player1Choice: PlayerChoice,
-  player2Choice: PlayerChoice
-): string {
+const startRound = function () {
   let result: string = "";
+  let player1Choice = choices[Math.floor(Math.random() * 3)];
+  let player2Choice = choices[Math.floor(Math.random() * 3)];
 
   // Check for a tie
   if (player1Choice === player2Choice) {
@@ -34,7 +35,7 @@ const startRound = function (
     result = "Player 2 wins";
     gameState.player2Score += 1;
   }
-  gameState.currentRound ++;
+  gameState.currentRound++;
   return result;
 };
 
@@ -47,20 +48,16 @@ const startGame = function () {
 };
 
 const playGame = function () {
-    startGame(); //initialize the game state
-    let player1Choice: PlayerChoice = "rock";
-    let player2Choice: PlayerChoice = "paper"
+  startGame(); //initialize the game state
 
-    let result = startRound(player1Choice, player2Choice);
+  // winning condition
+  while (Math.abs(gameState.player1Score - gameState.player2Score) < 2) {
+    let result = startRound();
     let winner: string = "";
+    console.log(result);
+  }
 
-    // winning condition
-    if (gameState.player1Score === 2) {
-        winner = "player 1"
-    } else if (gameState.player1Score === 2) {
-        winner = "player 2";
-    }   
+  console.log(gameState);
+};
 
-    console.log(winner)
-}
-
+playGame();
