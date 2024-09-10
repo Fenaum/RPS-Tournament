@@ -4,25 +4,27 @@ export function createBrackets(...players: any) {
   return {
     brackets: {} as { [key: string]: any[] },
     roundth: 1 as number, // start with round 1
+    winner: null as any,
     initializeBrackets: function () {
       if (players.length % 4 === 0) {
-        this.brackets[`round${this.roundth}`] = [];
-
-        for (let i = 0; i < players.length; i += 2) {
-          let player1 = players[i];
-          let player2 = players[i + 1];
-          this.brackets[`round${this.roundth}`].push({
-            player1,
-            player2,
-            winner: "",
-          });
-        }
+        this.initializeRound(players, this.roundth);
       } else {
         console.log("Not enough players");
       }
     },
+    initializeRound: function (roundPlayers: any[], roundNumber: number) {
+      this.brackets[`round${roundNumber}`] = [];
+      for (let i = 0; i < roundPlayers.length; i += 2) {
+        let player1 = roundPlayers[i];
+        let player2 = roundPlayers[i + 1];
+        this.brackets[`round${roundNumber}`].push({
+          player1,
+          player2,
+          winner: "",
+        });
+      }
+    },
     startTournament: function () {
-        
       // Your logic for starting the tournament
       for (let round in this.brackets) {
         // console.log(this.brackets[round]);
@@ -32,8 +34,22 @@ export function createBrackets(...players: any) {
           let game = createGame(pair.player1, pair.player2);
           game.playGame();
           pair.winner = game.gameState.winner;
-          console.log(this.brackets)
         }
+      }
+
+      // moving to the nextround
+      let nextRoundPlayers = this.brackets[`round${this.roundth}`].map(
+        (pair) => {
+          return { name: pair.winner };
+        }
+      );
+      console.log(this.brackets);
+      this.roundth++;
+      if (nextRoundPlayers.length >= 2) {
+        this.initializeRound(nextRoundPlayers, this.roundth);
+        this.startTournament(); // Automatically start the next round
+      } else if (nextRoundPlayers.length === 1) {
+        this.winner = nextRoundPlayers[0]
       }
     },
   };
