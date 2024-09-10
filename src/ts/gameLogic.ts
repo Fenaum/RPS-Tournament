@@ -57,7 +57,7 @@ export function createGame(player1: any, player2: any) {
       } else {
         this.gameState.winner = this.player2;
       }
-      // console.log(this.gameState.winner)
+          // console.log(this.gameState.winner)
     },
   };
 }

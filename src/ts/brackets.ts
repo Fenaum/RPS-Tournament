@@ -3,11 +3,11 @@ import { createGame } from "./gameLogic";
 export function createBrackets(...players: any) {
   return {
     brackets: {} as { [key: string]: any[] },
-    roundth: 1 as number, // start with round 1
+    round: 1 as number, // start with round 1
     winner: null as any,
     initializeBrackets: function () {
       if (players.length % 4 === 0) {
-        this.initializeRound(players, this.roundth);
+        this.initializeRound(players, this.round);
       } else {
         console.log("Not enough players");
       }
@@ -38,18 +38,17 @@ export function createBrackets(...players: any) {
       }
 
       // moving to the nextround
-      let nextRoundPlayers = this.brackets[`round${this.roundth}`].map(
-        (pair) => {
-          return { name: pair.winner };
-        }
-      );
+      let nextRoundPlayers = this.brackets[`round${this.round}`].map((pair) => {
+        return { name: pair.winner };
+      });
       console.log(this.brackets);
-      this.roundth++;
+      this.round++;
       if (nextRoundPlayers.length >= 2) {
-        this.initializeRound(nextRoundPlayers, this.roundth);
+        this.initializeRound(nextRoundPlayers, this.round);
         this.startTournament(); // Automatically start the next round
       } else if (nextRoundPlayers.length === 1) {
         this.winner = nextRoundPlayers[0]
+        console.log(this.winner)
       }
     },
   };
