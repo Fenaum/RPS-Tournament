@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rock Paper Scissors Tournament</title>
+</head>
+<body>
+  <h1>Join the Tournament</h1>
+  <form id="gameForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" required><br><br>
+
+    <label for="move">Choose your move:</label>
+    <select id="move">
+      <option value="rock">Rock</option>
+      <option value="paper">Paper</option>
+      <option value="scissors">Scissors</option>
+    </select><br><br>
+
+    <button type="submit">Submit Move</button>
+  </form>
+
+  <div id="output"></div>
+
+  <script>
+    // Initialize WebSocket connection
+    const ws = new WebSocket('ws://localhost:3000');
+
+    ws.onopen = () => {
+      console.log('Connected to the server');
+    };
+
+    ws.onmessage = (message) => {
+      const output = document.getElementById('output');
+      output.innerText = 'Server Response: ' + message.data;
+    };
+
+    ws.onclose = () => {
+      console.log('Disconnected from the server');
+    };
+
+    // Form submission handler
+    const form = document.getElementById('gameForm');
+    form.addEventListener('submit', (event) => {
+      event.preventDefault(); // Prevent page reload on form submission
+
+      const username = document.getElementById('username').value;
+      const move = document.getElementById('move').value;
+
+      // Send player data to the WebSocket server
+      ws.send(JSON.stringify({ username, move }));
+
+      // Reset form for the next input
+      form.reset();
+    });
+  </script>
+</body>
+</html>

@@ -11,6 +11,8 @@
   "description": "",
   "dependencies": {
     "express": "^4.21.0",
+    "firebase": "^10.13.1",
+    "firestore": "^1.1.6",
     "ws": "^8.18.0"
   }
 }

@@ -1,10 +1,10 @@
-import { createGame } from "./gameLogic";
+const { createGame } = require("./gameLogic");
 
-export function createBrackets(...players: any) {
+function createTournament(...players) {
   return {
-    brackets: {} as { [key: string]: any[] },
-    round: 1 as number, // start with round 1
-    winner: null as any,
+    brackets: {},
+    round: 1,
+    winner: null,
     initializeBrackets: function () {
       if (players.length % 4 === 0) {
         this.initializeRound(players, this.round);
@@ -12,7 +12,7 @@ export function createBrackets(...players: any) {
         console.log("Not enough players");
       }
     },
-    initializeRound: function (roundPlayers: any[], roundNumber: number) {
+    initializeRound: function (roundPlayers, roundNumber) {
       this.brackets[`round${roundNumber}`] = [];
       for (let i = 0; i < roundPlayers.length; i += 2) {
         let player1 = roundPlayers[i];
@@ -25,46 +25,43 @@ export function createBrackets(...players: any) {
       }
     },
     startTournament: function () {
-      // Your logic for starting the tournament
       for (let round in this.brackets) {
-        // console.log(this.brackets[round]);
         for (let pair of this.brackets[round]) {
-          // const game = createGame(pair[0],pair[1])
-          // Access pair properties directly instead of using player1 and player2
           let game = createGame(pair.player1, pair.player2);
           game.playGame();
           pair.winner = game.gameState.winner;
         }
       }
 
-      // moving to the nextround
       let nextRoundPlayers = this.brackets[`round${this.round}`].map((pair) => {
-        return { name: pair.winner };
+        return { username: pair.winner };
       });
       console.log(this.brackets);
       this.round++;
       if (nextRoundPlayers.length >= 2) {
         this.initializeRound(nextRoundPlayers, this.round);
-        this.startTournament(); // Automatically start the next round
+        this.startTournament();
       } else if (nextRoundPlayers.length === 1) {
-        this.winner = nextRoundPlayers[0]
-        console.log(this.winner)
+        this.winner = nextRoundPlayers[0];
+        console.log(this.winner);
       }
     },
   };
 }
 
 let testPlayers = [
-  { name: "john" },
-  { name: "Vayne" },
-  { name: "Jane" },
-  { name: "Michael" },
-  { name: "Sarah" },
-  { name: "William" },
-  { name: "Emily" },
-  { name: "David" },
+  { username: "john" },
+  { username: "Vayne" },
+  { username: "Jane" },
+  { username: "Michael" },
+  { username: "Sarah" },
+  { username: "William" },
+  { username: "Emily" },
+  { username: "David" },
 ];
 
-const testbrackets = createBrackets(...testPlayers);
+const testbrackets = createTournament(...testPlayers);
 testbrackets.initializeBrackets();
 testbrackets.startTournament();
+
+module.exports = { createTournament };
