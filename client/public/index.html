@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat Application</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+  <header>
+    <h1 id="heading1">RPS-T</h1>
+  </header>
+  <main>
+    <div id="container">
+      <section id="room-section">
+        <h2>Create/Join Room</h2>
+        <form id="form">
+          <label for="room-input">Room Name:</label>
+          <input type="text" id="room-input" placeholder="Enter room name" required>
+          <button type="submit" id="create-room-button">Create Room</button>
+        </form>
+        <div id="room-list">
+          <h3>Available Rooms:</h3>
+          <ul id="rooms"></ul>
+        </div>
+      </section>
+
+      <section id="chat-section" class="hidden">
+        <h2>Chat</h2>
+        <div id="message-container"></div>
+        <form id="message-form">
+          <input type="text" id="message-input" placeholder="Type your message here..." required>
+          <button type="submit" id="send-button">Send</button>
+        </form>
+      </section>
+
+      <section id="room-details-section" class="hidden">
+        <h2>Room: <span id="room-name"></span></h2>
+        <div id="message-container"></div>
+        <form id="message-form">
+          <input type="text" id="message-input" placeholder="Type your message here..." required>
+          <button type="submit" id="send-button">Send</button>
+        </form>
+        <div id="waiting-room-section">
+          <h3>Waiting Room</h3>
+          <div id="waiting-room-message"></div>
+          <button id="ready-button">Ready</button>
+          <button id="start-game-button">Start Game</button>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script src="./socket.js" type="module" defer></script>
+  <script src="./rooms.js" type="module" defer></script>
+  <script src="./messages.js" type="module" defer></script>
+  <script src="./ui.js" type="module" defer></script>
+  <script src="./main.js" type="module" defer></script>
+  <script src="./utils.js" type="module" defer></script>
+</body>
+
+</html>

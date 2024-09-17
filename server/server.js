@@ -1,44 +1,37 @@
-const express = require("express");
-const http = require("http");
-const WebSocket = require("ws");
-// const { createTournament } = require("./logic/tournament"); // Import tournament logic
+const { instrument } = require("@socket.io/admin-ui");
+const io = require("socket.io")(3000, {
+  cors: {
+    origin: ["http://localhost:8080", "https://admin.socket.io"],
+    credentials: true,
+  },
+});
 
-// Create an Express application
-const app = express();
+const rooms = {};
 
-// Create an HTTP server
-const server = http.createServer(app);
+io.on("connection", (socket) => {
+  socket.on('sendMessage', (message) => {
+    socket.broadcast.emit('receiveMessage', message)
+  })
+  socket.on("join-room", (room, cb) => {
+    // if (room.trim() === "") {
+    //   socket.emit('error', 'Please enter a valid room name');
+    //   return;
+    // }
+    
+    // socket.join(room);
+    
+    // if (!room[room]) {
+    //   rooms[room] = []
+    // }
 
-// Create a WebSocket server
-const wss = new WebSocket.Server({ server });
+    // rooms[room].push(socket.id)
 
-// Store ongoing tournaments and games
-const tournaments = {}; // In-memory storage for tournaments
+    // if (room[room].length === 2) {
+    //   io.to(room).emit('Ready to start match', rooms[room])
+    // }
 
-// Handle WebSocket connections
-wss.on("connection", (ws) => {
-  console.log("New player connected");
-
-  ws.on("message", (message) => {
-    const playerData = JSON.parse(message);
-    console.log(`Player ${playerData.username} chose ${playerData.move}`);
-
-    // You can implement game logic here
-    // Broadcast the move to other players or respond to the player
-
-    ws.send(`Move received: ${playerData.move}`);
-  });
-
-  ws.on("close", () => {
-    console.log("Player disconnected");
+    cb(`You joined ${room}`);
   });
 });
 
-
-// Serve static files from the 'public' directory
-app.use(express.static("public"));
-
-// Start the server
-server.listen(3000, () => {
-  console.log("Server is listening on port 3000");
-});
+instrument(io, { auth: false });
