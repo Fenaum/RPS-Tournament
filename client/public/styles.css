@@ -1,0 +1,159 @@
+/* styles.css */
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
+#container {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  gap: 1rem;
+}
+
+#room-section, #chat-section {
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+#room-section {
+  max-width: 300px;
+}
+
+#room-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#room-list li {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#room-list li:hover {
+  background-color: #e0e0e0;
+}
+
+form {
+  margin-bottom: 1rem;
+}
+
+input[type="text"] {
+  width: calc(100% - 110px);
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+button {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+#message-container {
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+#message-form {
+  display: flex;
+}
+
+#message-input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+#send-button {
+  margin-left: 0.5rem;
+  padding: 0.5rem;
+}
+
+.message {
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+}
+
+/* Style for the room container */
+.room-container {
+    display: flex; /* Align items horizontally */
+    justify-content: space-between; /* Distribute space between items */
+    align-items: center; /* Center items vertically */
+    padding: 10px; /* Add padding around the container */
+    margin: 5px 0; /* Add margin between rooms */
+    border: 1px solid #ccc; /* Add a border */
+    border-radius: 5px; /* Round the corners */
+    background-color: #f9f9f9; /* Light background color */
+}
+
+/* Style for the room name */
+.room-name {
+    font-size: 16px; /* Set font size */
+    font-weight: bold; /* Make the font bold */
+}
+
+/* Style for the join button */
+.join-button {
+    padding: 5px 10px; /* Add padding inside the button */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Round the corners */
+    background-color: #007bff; /* Set background color */
+    color: white; /* Set text color */
+    cursor: pointer; /* Change cursor to pointer */
+    font-size: 14px; /* Set font size */
+}
+
+/* Add hover effect for the button */
+.join-button:hover {
+    background-color: #0056b3; /* Change background color on hover */
+}
+
+#form {
+  display: flex;
+}
+
+#create-room-button {
+  margin-left: 1rem;
+}
+
+.hidden {
+  display: none;
+}
