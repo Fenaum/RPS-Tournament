@@ -1,6 +1,5 @@
-// socket.js
 import { io } from "socket.io-client";
-import { displayMessage } from "./utils.js";
+import { displayMessage, addRoomToUI } from "./utils.js";
 
 export const socket = io("http://localhost:3000");
 
@@ -10,7 +9,11 @@ export function setupSocket() {
     displayMessage(socket.id);
   });
 
-  socket.on("receiveMessage", (message) => {
+  socket.on("receive-message", (message) => {
     displayMessage(message);
+  });
+
+  socket.on("receive-room", (roomName) => {
+    addRoomToUI(roomName);
   });
 }

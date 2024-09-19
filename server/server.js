@@ -9,16 +9,21 @@ const io = require("socket.io")(3000, {
 const rooms = {};
 
 io.on("connection", (socket) => {
-  socket.on('sendMessage', (message) => {
-    socket.broadcast.emit('receiveMessage', message)
+  socket.on('send-message', (message) => {
+    socket.broadcast.emit('receive-message', message)
   })
+
+  socket.on('create-room', (room) => {
+    socket.broadcast.emit('receive-room', room)
+  })
+
   socket.on("join-room", (room, cb) => {
     // if (room.trim() === "") {
     //   socket.emit('error', 'Please enter a valid room name');
     //   return;
     // }
     
-    // socket.join(room);
+    socket.join(room);
     
     // if (!room[room]) {
     //   rooms[room] = []
@@ -29,8 +34,8 @@ io.on("connection", (socket) => {
     // if (room[room].length === 2) {
     //   io.to(room).emit('Ready to start match', rooms[room])
     // }
-
-    cb(`You joined ${room}`);
+    console.log(`user ${socket.id} joined room ${room}`)
+    cb();
   });
 });
 

@@ -10,7 +10,8 @@ export function handleMessage(event) {
   if (message === "") return;
 
   displayMessage(message);
-  socket.emit("sendMessage", message);
+  socket.emit("send-message", message);
 
   messageInput.value = "";
 }
+
