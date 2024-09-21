@@ -1,5 +1,5 @@
 import { io } from "socket.io-client";
-import { displayMessage, addRoomToUI } from "./utils.js";
+import { displayMessage, addRoomToUI, addCurrentPlayersToUI } from "./utils.js";
 
 export const socket = io("http://localhost:3000");
 
@@ -9,11 +9,26 @@ export function setupSocket() {
     displayMessage(socket.id);
   });
 
+  socket.on("receive-room", (rooms) => {
+    console.log(rooms)
+    for (const room in rooms) {
+      if (rooms.hasOwnProperty(room)) {
+        addRoomToUI(rooms[room].roomName);
+      }
+    }
+  });
+
   socket.on("receive-message", (message) => {
     displayMessage(message);
   });
 
-  socket.on("receive-room", (roomName) => {
-    addRoomToUI(roomName);
-  });
+
+  socket.on('ready-to-start-match', (room) =>{
+    console.log(`${room} ready to start match`)
+  })
+
+  socket.on('waiting-room', (playerPair) => {
+    addCurrentPlayersToUI(playerPair)
+  })
+
 }
