@@ -154,6 +154,22 @@ button:hover {
   margin-left: 1rem;
 }
 
+
+.room-details-section {
+  display: flex;
+  align-items: baseline;
+}
+.room-details-section > * {
+  margin: 10px;
+}
+
+.game-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: auto 2rem; 
+}
+
 .hidden {
   display: none;
 }
