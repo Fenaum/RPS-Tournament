@@ -14,7 +14,8 @@ module.exports = {
     /* ... */
   },
   devOptions: {
-    /* ... */
+    port: 8081,
+    hmrPort: 12322,
   },
   buildOptions: {
     /* ... */

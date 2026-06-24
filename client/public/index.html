@@ -3,80 +3,121 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chat Application</title>
+    <title>RPS Tournament</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
-
   <body>
-    <header>
-      <h1 id="heading1">RPS-T</h1>
-    </header>
-    <main>
-      <div id="container">
-        <section id="room-section">
-          <h2>Create/Join Room</h2>
-          <form id="form">
-            <label for="room-input">Room Name:</label>
-            <input
-              type="text"
-              id="room-input"
-              placeholder="Enter room name"
-              required
-            />
-            <button type="submit" id="create-room-button">Create Room</button>
-          </form>
-          <div id="room-list">
-            <h3>Available Rooms:</h3>
-            <ul id="rooms"></ul>
-          </div>
-        </section>
-
-        <section id="chat-section" class="hidden">
-          <h2>Chat</h2>
-          <div id="message-container"></div>
-          <form id="message-form">
-            <input
-              type="text"
-              id="message-input"
-              placeholder="Type your message here..."
-              required
-            />
-            <button type="submit" id="send-button">Send</button>
-          </form>
-        </section>
-
-        <section id="room-details-section" class="room-details-section hidden">
-          <div>
-            <h2>Room: <span id="room-name"></span></h2>
-            <div id="message-container"></div>
-            <form id="message-form">
-              <input
-                type="text"
-                id="message-input"
-                placeholder="Type your message here..."
-                required
-              />
-              <button type="submit" id="send-button">Send</button>
-            </form>
-          </div>
-          <div id="current-players-section">
-            <h2>Players</h2>
-            <div id="current-players-container">
-            </div>
-          </div>
-          <div class="game-buttons">
-            <button id="ready-button">Ready</button>
-            <button id="start-game-button">Start Game</button>
-            <button id="exit-room-button">Quit Room</button>
-          </div>
-        </section>
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">20 Player WebSocket Bracket</p>
+        <h1>RPS Tournament</h1>
       </div>
+      <div class="connection-pill" id="connection-status">Connecting</div>
+    </header>
+
+    <main class="app-shell">
+      <section class="panel lobby-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Lobby</p>
+            <h2>Queue Up</h2>
+          </div>
+          <strong id="queue-count">0/20</strong>
+        </div>
+
+        <form id="queue-form" class="queue-form">
+          <label for="player-name">Display name</label>
+          <div class="form-row">
+            <input
+              id="player-name"
+              type="text"
+              maxlength="24"
+              placeholder="Enter your name"
+              autocomplete="nickname"
+              required
+            />
+            <button id="join-queue-button" type="submit">Join Queue</button>
+          </div>
+        </form>
+
+        <button id="leave-queue-button" class="secondary-button" type="button">
+          Leave Queue
+        </button>
+        <button id="fill-cpu-button" class="cpu-button" type="button">
+          Fill with CPU
+        </button>
+
+        <div class="queue-meter" aria-hidden="true">
+          <div id="queue-meter-fill"></div>
+        </div>
+
+        <div id="queue-list" class="queue-list"></div>
+        <p id="lobby-message" class="status-text">Waiting for players.</p>
+      </section>
+
+      <section class="panel match-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Current Match</p>
+            <h2 id="match-title">No active match</h2>
+          </div>
+        </div>
+
+        <p id="match-status" class="status-text">
+          Join the queue to enter the next tournament.
+        </p>
+
+        <div id="move-controls" class="move-controls" hidden>
+          <button type="button" data-choice="rock">Rock</button>
+          <button type="button" data-choice="paper">Paper</button>
+          <button type="button" data-choice="scissors">Scissors</button>
+        </div>
+      </section>
+
+      <section class="panel leaderboard-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Points</p>
+            <h2>Leaderboard</h2>
+          </div>
+        </div>
+        <ol id="leaderboard-list" class="leaderboard-list"></ol>
+      </section>
+
+      <section class="panel bracket-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Bracket</p>
+            <h2 id="tournament-title">No tournament yet</h2>
+          </div>
+        </div>
+        <div id="bracket" class="bracket-empty">Queue fills to 20 players.</div>
+      </section>
+
+      <section class="panel chat-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Lobby Chat</p>
+            <h2>Messages</h2>
+          </div>
+        </div>
+        <div id="message-container" class="message-container"></div>
+        <form id="message-form" class="message-form">
+          <input
+            id="message-input"
+            type="text"
+            maxlength="160"
+            placeholder="Send a message"
+            autocomplete="off"
+          />
+          <button type="submit">Send</button>
+        </form>
+      </section>
     </main>
+
+    <script src="http://localhost:3100/socket.io/socket.io.js" defer></script>
     <script src="./socket.js" type="module" defer></script>
-    <script src="./rooms.js" type="module" defer></script>
-    <script src="./messages.js" type="module" defer></script>
     <script src="./ui.js" type="module" defer></script>
     <script src="./main.js" type="module" defer></script>
-    <script src="./utils.js" type="module" defer></script>
   </body>
 </html>
